@@ -1,0 +1,34 @@
+<template>
+  <header>
+    <h4 class="authorName">{{ name }}</h4>
+    <p class="postTime">{{ time }}</p>
+  </header>
+  <div class="tweetSection">
+    <p>{{ tweet }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["id", "name", "tweet", "time"],
+};
+</script>
+
+<style scoped>
+header {
+  padding: 0.5rem;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.authorName {
+  font-weight: 300;
+}
+.postTime {
+  font-weight: 100;
+}
+.tweetSection {
+  padding: 0.5rem;
+  font-weight: 500;
+}
+</style>
