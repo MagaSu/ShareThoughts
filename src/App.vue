@@ -26,16 +26,18 @@ export default {
 
 p,
 h3 {
-  color: #fff;
+  color: #f5f3f4;
+  font-weight: 400;
 }
 html {
   font-family: Roboto, "sans-serif";
   font-weight: bold;
-  color: #fff;
+  color: #f5f3f4;
+  font-weight: 400;
 }
 body {
   margin: 0;
   padding: 0;
-  background-color: #15202b;
+  background-color: #0b090a;
 }
 </style>

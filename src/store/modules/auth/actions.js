@@ -15,11 +15,11 @@ export default {
     const mode = payload.mode;
 
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCNSAOmTiMf6O_eWsGNdH5NqEimYhfiWI";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAxKNRPyX75qMiqEOcTNUB4lpAb3clH4-U";
 
     if (mode === "signup") {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCCNSAOmTiMf6O_eWsGNdH5NqEimYhfiWI";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAxKNRPyX75qMiqEOcTNUB4lpAb3clH4-U";
     }
 
     const response = await fetch(url, {
@@ -49,26 +49,23 @@ export default {
       await context.dispatch("getUserName");
     } else {
       await context.dispatch("setUserName", {
-        firstName: payload.firstName,
-        lastName: payload.lastName,
+        nickname: payload.nickname,
       });
     }
 
     localStorage.setItem("token", responseData.idToken);
     localStorage.setItem("userId", responseData.localId);
-    localStorage.setItem("firstName", context.state.firstName);
-    localStorage.setItem("lastName", context.state.lastName);
+    localStorage.setItem("nickname", context.state.nickname);
   },
   async setUserName(context, payload) {
     const userId = context.getters.userId;
 
     const response = await fetch(
-      `https://twitter-clone-e8a3c-default-rtdb.firebaseio.com/users/${userId}.json`,
+      `https://share-thoughts-10a74-default-rtdb.firebaseio.com/users/${userId}.json`,
       {
         method: "PUT",
         body: JSON.stringify({
-          firstName: payload.firstName,
-          lastName: payload.lastName,
+          nickname: payload.nickname,
         }),
       }
     );
@@ -87,7 +84,7 @@ export default {
     const token = context.getters.token;
 
     const response = await fetch(
-      `https://twitter-clone-e8a3c-default-rtdb.firebaseio.com/users/${userId}.json`
+      `https://share-thoughts-10a74-default-rtdb.firebaseio.com/users/${userId}.json`
     );
 
     const responseData = await response.json();
@@ -102,36 +99,31 @@ export default {
     context.commit("setUser", {
       userId: userId,
       token: token,
-      firstName: responseData.firstName,
-      lastName: responseData.lastName,
+      nickname: responseData.nickname,
     });
   },
   tryLogin(context) {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
-    const firstName = localStorage.getItem("firstName");
-    const lastName = localStorage.getItem("lastName");
+    const nickname = localStorage.getItem("nickname");
 
     if (userId && token) {
       context.commit("setUser", {
         userId,
         token,
-        firstName,
-        lastName,
+        nickname,
       });
     }
   },
   logout(context) {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
-    localStorage.removeItem("firstName");
-    localStorage.removeItem("lastName");
+    localStorage.removeItem("nickname");
 
     context.commit("setUser", {
       userId: null,
       token: null,
-      firstName: null,
-      lastName: null,
+      nickname: null,
     });
   },
 };

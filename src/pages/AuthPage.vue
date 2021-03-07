@@ -9,12 +9,8 @@
         <input type="email" id="email" v-model.trim="email" />
       </div>
       <div class="form-control" v-if="mode === 'signup'">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" v-model.trim="firstName" />
-      </div>
-      <div class="form-control" v-if="mode === 'signup'">
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" v-model.trim="lastName" />
+        <label for="nickname">Nickname</label>
+        <input type="text" id="nickname" v-model.trim="nickname" />
       </div>
       <div class="form-control">
         <label for="password">Password</label>
@@ -39,8 +35,7 @@ export default {
   data() {
     return {
       email: "",
-      firstName: "",
-      lastName: "",
+      nickname: "",
       password: "",
       mode: "login",
       inputIsValid: true,
@@ -68,10 +63,7 @@ export default {
       }
       if (
         !this.mode === "login" &&
-        (this.firstName === "" ||
-          this.firstName.length < 3 ||
-          this.lastName === "" ||
-          this.lastName.length < 2)
+        (this.nickname === "" || this.nickname.length < 3)
       ) {
         this.inputIsValid = false;
         return;
@@ -80,8 +72,7 @@ export default {
       const actionPayload = {
         email: this.email,
         password: this.password,
-        firstName: this.mode === "signup" ? this.firstName : null,
-        lastName: this.mode === "signup" ? this.lastName : null,
+        nickname: this.mode === "signup" ? this.nickname : null,
       };
 
       try {
@@ -111,7 +102,7 @@ form {
   margin: 1rem;
 }
 label {
-  font-weight: bold;
+  font-weight: 300;
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -122,16 +113,16 @@ input {
   display: block;
   width: 100%;
   font: inherit;
-  border: none;
-  border-top: 1px solid #1696e6;
-  border-bottom: 1px solid#1696e6;
+  border: 1px solid #660708;
+  border-radius: 9999px;
   padding: 0.15rem;
-  background-color: #253341;
-  color: #fff;
+  padding-left: 0.5rem;
+  background-color: #d3d3d3 /*#fdfffc*/;
+  color: #660708;
 }
 input:focus {
-  border-color: #1696e6;
-  background-color: #253341;
+  border-color: #660708;
+  box-shadow: 0 0.5px 10px #e5383b;
   outline: none;
 }
 </style>

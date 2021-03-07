@@ -11,7 +11,7 @@
         <slot></slot>
       </section>
       <menu class="actions">
-        <base-button class="closeButton" @click="tryClose">Close</base-button>
+        <base-button @click="tryClose">Close</base-button>
       </menu>
     </dialog>
   </teleport>
@@ -50,10 +50,10 @@ export default {
 }
 
 header {
-  background-color: #15202b;
+  background-color: #161a1d;
   color: white;
+  height: 50px;
   width: 100%;
-  padding: 1rem;
 }
 
 header h2 {
@@ -79,26 +79,15 @@ dialog {
   z-index: 100;
   border-radius: 12px;
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 0.5px 10px #e5383b;
   padding: 0;
   margin: 0;
   overflow: hidden;
-  background-color: #15202b;
+  background-color: #161a1d;
 }
 
 .closeModal {
-  border-bottom: solid 1px #38444d;
+  border-bottom: solid 1px #660708;
   padding: 1rem;
-}
-.closeButton {
-  border: none;
-  outline: none;
-  color: #1da1f2;
-  background-color: #15202b;
-  padding: 10px;
-}
-.closeButton:hover {
-  background-color: rgba(29, 161, 242, 0.2);
-  border-radius: 9999px;
 }
 </style>

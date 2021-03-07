@@ -3,14 +3,14 @@
     <h4 class="authorName">{{ name }}</h4>
     <p class="postTime">{{ time }}</p>
   </header>
-  <div class="tweetSection">
-    <p>{{ tweet }}</p>
+  <div class="contentSection">
+    <p>{{ thought }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["id", "name", "tweet", "time"],
+  props: ["id", "name", "thought", "time"],
 };
 </script>
 
@@ -27,7 +27,7 @@ header {
 .postTime {
   font-weight: 100;
 }
-.tweetSection {
+.contentSection {
   padding: 0.5rem;
   font-weight: 500;
 }

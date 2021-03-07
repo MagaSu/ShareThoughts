@@ -2,17 +2,17 @@
   <base-dialog :show="!!error" title="An occured error!" @close="handleError">{{
     error
   }}</base-dialog>
-  <form @submit.prevent="submitTweet">
+  <form @submit.prevent="submitThought">
     <div class="form-control">
       <textarea
-        id="tweetInput"
+        id="thoughtInput"
         cols="30"
-        placeholder="What's happening?"
-        v-model.trim="tweet"
+        placeholder="What are you thinking about?"
+        v-model.trim="thought"
       ></textarea>
       <p v-if="!inputIsValid">The field is empty, enter a couple of words!</p>
     </div>
-    <base-button>Tweet</base-button>
+    <base-button>Thought</base-button>
     <base-button type="button" @click="load">Refresh</base-button>
   </form>
 </template>
@@ -22,7 +22,7 @@ export default {
   emits: ["load"],
   data() {
     return {
-      tweet: "",
+      thought: "",
       error: null,
       inputIsValid: true,
     };
@@ -36,9 +36,9 @@ export default {
     load() {
       this.$emit("load");
     },
-    async submitTweet() {
+    async submitThought() {
       this.inputIsValid = true;
-      if (this.tweet === "") {
+      if (this.thought === "") {
         this.inputIsValid = false;
         return;
       }
@@ -48,14 +48,14 @@ export default {
         `${new Date().getMinutes()}`.padStart(2, 0);
 
       try {
-        await this.$store.dispatch("tweets/addTweet", {
-          tweet: this.tweet,
+        await this.$store.dispatch("thoughts/addThought", {
+          thought: this.thought,
           time: time,
         });
       } catch (err) {
-        this.error = err.message || "Failed to tweet.";
+        this.error = err.message || "Failed to share thought...";
       }
-      this.tweet = "";
+      this.thought = "";
       this.load();
     },
     handleError() {
@@ -75,11 +75,14 @@ textarea {
   height: 100px;
   color: #fff;
   font-size: 18px;
-  background-color: #15202b;
-  border: none;
-  border-bottom: 1px solid #1696e6;
+  background-color: #a4161a;
+  border: 1px solid #660708;
+  border-radius: 9px;
   outline: none;
   padding: 0.5rem;
   margin-bottom: 10px;
+}
+textarea::placeholder {
+  color: #fff;
 }
 </style>

@@ -1,7 +1,7 @@
 export default {
   async users(context) {
     const response = await fetch(
-      "https://twitter-clone-e8a3c-default-rtdb.firebaseio.com/users.json"
+      "https://share-thoughts-10a74-default-rtdb.firebaseio.com/users.json"
     );
 
     const responseData = await response.json();
@@ -16,8 +16,7 @@ export default {
     for (const key in responseData) {
       const user = {
         id: key,
-        firstName: responseData[key].firstName,
-        lastName: responseData[key].lastName,
+        nickname: responseData[key].nickname,
       };
       users.push(user);
     }

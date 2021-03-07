@@ -1,16 +1,19 @@
 <template>
+  <base-dialog :show="!!error" title="An occured error!" @close="handleError">
+    {{ error }}
+  </base-dialog>
+  <base-spinner v-if="isLoading"></base-spinner>
   <ul v-for="user in users" :key="user.id">
     <base-card>
       <h3 class="name">
         <router-link :to="`${userPage}${user.id}`">
-          {{ user.firstName + " " + user.lastName }}
+          {{ user.nickname }}
         </router-link>
       </h3>
       <div class="info">
         <p>
-          Tweets:
-          <span>{{ tweetsCount(user.id) }}</span>
-          <span></span>
+          Thoughts:
+          <span>{{ thoughtsCount(user.id) }}</span>
         </p>
       </div>
     </base-card>
@@ -19,28 +22,48 @@
 
 <script>
 export default {
-  created() {},
+  created() {
+    this.loadUsers();
+    this.loadThoughts();
+  },
+  data() {
+    return {
+      isLoading: false,
+      error: null,
+    };
+  },
   computed: {
     users() {
       return this.$store.getters["users/users"];
     },
-    tweets() {
-      return this.$store.getters["tweets/tweets"];
+    thoughts() {
+      return this.$store.getters["thoughts/thoughts"];
     },
     userPage() {
       return "/user/";
     },
   },
   methods: {
-    tweetsCount(id) {
-      return this.tweets.filter((tweet) => tweet.id === id).length;
+    thoughtsCount(id) {
+      return this.thoughts.filter((thought) => thought.id === id).length;
     },
     async loadUsers() {
+      this.isLoading = true;
       try {
-        await this.$store.dispatch("user/users");
+        await this.$store.dispatch("users/users");
       } catch (err) {
         this.error = err.message || "Failed to load users.";
       }
+      this.isLoading = false;
+    },
+    async loadThoughts() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("thoughts/fetchThoughts");
+      } catch (err) {
+        this.error = err.message || "Failed to load thoughts.";
+      }
+      this.isLoading = false;
     },
   },
 };

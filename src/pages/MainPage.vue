@@ -2,29 +2,26 @@
   <base-dialog :show="!!error" title="An occured error!" @close="handleError">
     {{ error }}
   </base-dialog>
+  <search-field></search-field>
   <base-card>
-    <search-field></search-field>
-  </base-card>
-  <base-card>
-    <header>
-      <h3>Home</h3>
-    </header>
     <div class="profile">
       <img src="../images/profile.jpg" alt="profile" />
+      <!--Dummy profile photo just for aesthetics.-->
       <h3>{{ name }}</h3>
     </div>
     <div>
-      <tweet-form @load="loadTweets"></tweet-form>
+      <input-form @load="loadThoughts"></input-form>
     </div>
     <section>
-      <ul v-for="tweet in userTweets" :key="tweet.id">
+      <base-spinner v-if="isLoading"></base-spinner>
+      <ul v-for="thought in userThoughts" :key="thought.id">
         <base-card>
-          <tweets-list
-            :id="tweet.id"
+          <thoughts-list
+            :id="thought.id"
             :name="name"
-            :tweet="tweet.tweet"
-            :time="tweet.time"
-          ></tweets-list>
+            :thought="thought.thought"
+            :time="thought.time"
+          ></thoughts-list>
         </base-card>
       </ul>
     </section>
@@ -32,15 +29,16 @@
 </template>
 
 <script>
-import TweetForm from "../components/tweets/TweetForm";
-import TweetsList from "../components/tweets/TweetsList";
+import InputForm from "../components/thoughts/InputForm";
+import ThoughtsList from "../components/thoughts/ThoughtsList";
 import SearchField from "../components/layout/SearchField";
 export default {
   components: {
-    TweetForm,
-    TweetsList,
+    InputForm,
+    ThoughtsList,
     SearchField,
   },
+
   data() {
     return {
       error: null,
@@ -48,8 +46,8 @@ export default {
     };
   },
   computed: {
-    userTweets() {
-      return this.$store.getters["tweets/userTweets"];
+    userThoughts() {
+      return this.$store.getters["thoughts/userThoughts"];
     },
     userId() {
       return this.$store.getters["userId"];
@@ -59,7 +57,7 @@ export default {
     },
   },
   created() {
-    this.loadTweets();
+    this.loadThoughts();
     this.loadUsers();
   },
   methods: {
@@ -71,16 +69,16 @@ export default {
       }
     },
 
-    async loadTweets() {
+    async loadThoughts() {
       if (!this.userId) {
         this.$router.replace("/auth");
         return;
       }
       this.isLoading = true;
       try {
-        await this.$store.dispatch("tweets/fetchTweets");
+        await this.$store.dispatch("thoughts/fetchThoughts");
       } catch (err) {
-        this.error = err.message || "Failed to load tweets.";
+        this.error = err.message || "Failed to load thoughts.";
       }
       this.isLoading = false;
     },
@@ -96,10 +94,6 @@ header {
   display: flex;
   justify-content: space-between;
   margin: 1rem;
-}
-.page-name {
-  border-bottom: solid 1px #38444d;
-  height: 50px;
 }
 .profile {
   display: flex;

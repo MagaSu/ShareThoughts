@@ -4,26 +4,25 @@
       <h3>{{ name }}</h3>
     </div>
     <section>
-      <ul v-for="tweet in userTweets" :key="tweet.id">
+      <ul v-for="thought in userThoughts" :key="thought.id">
         <base-card>
-          <tweets-list
-            :id="tweet.id"
+          <thoughts-list
+            :id="thought.id"
             :name="name"
-            :tweet="tweet.tweet"
-            :time="tweet.time"
-          ></tweets-list>
+            :thought="thought.thought"
+            :time="thought.time"
+          ></thoughts-list>
         </base-card>
       </ul>
-      <base-button @click="getTweet">Get Tweets</base-button>
     </section>
   </base-card>
 </template>
 
 <script>
-import TweetsList from "../components/tweets/TweetsList";
+import ThoughtsList from "../components/thoughts/ThoughtsList";
 export default {
   components: {
-    TweetsList,
+    ThoughtsList,
   },
   computed: {
     userId() {
@@ -34,16 +33,11 @@ export default {
       return users.find((user) => user.id === this.userId);
     },
     name() {
-      return this.currentUser.firstName + " " + this.currentUser.lastName;
+      return this.currentUser.nickname;
     },
-    userTweets() {
-      const tweets = this.$store.getters["tweets/tweets"];
-      return tweets.filter((tweet) => tweet.id === this.userId);
-    },
-  },
-  methods: {
-    getTweet() {
-      console.log(this.userTweets);
+    userThoughts() {
+      const thoughts = this.$store.getters["thoughts/thoughts"];
+      return thoughts.filter((thought) => thought.id === this.userId);
     },
   },
 };

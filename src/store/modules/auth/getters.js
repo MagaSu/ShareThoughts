@@ -6,6 +6,6 @@ export default {
     return state.token;
   },
   name(state) {
-    return state.firstName + " " + state.lastName;
+    return state.nickname;
   },
 };

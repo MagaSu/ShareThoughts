@@ -1,10 +1,10 @@
 <template>
   <div class="search">
     <input type="search" placeholder="Search Twitter" v-model="search" />
-    <div v-if="search.length > 0">
+    <div class="hover-result" v-if="search.length > 0">
       <ul v-for="user in filteredUsers" :key="user.id">
         <li @click="userPageLink(user.id)">
-          {{ user.firstName + " " + user.lastName }}
+          {{ user.nickname }}
         </li>
       </ul>
     </div>
@@ -29,9 +29,7 @@ export default {
     filteredUsers() {
       return this.users.filter(
         (user) =>
-          user.firstName.toLowerCase().indexOf(this.search.toLowerCase()) !==
-            -1 ||
-          user.lastName.toLowerCase().indexOf(this.search.toLowerCase()) !== -1
+          user.nickname.toLowerCase().indexOf(this.search.toLowerCase()) !== -1
       );
     },
   },
@@ -48,32 +46,36 @@ export default {
   font-weight: 500;
 }
 div {
-  width: 100%;
+  width: 50%;
+  margin: 0 auto;
   text-align: center;
 }
 input {
-  color: #fff;
-  background-color: #253341;
+  color: #660708;
+  background-color: #d3d3d3;
   border-radius: 50px;
-  border: solid 1px #253341;
+  border: solid 1px #660708;
   outline: none;
   text-align: center;
 
   width: 50%;
-  /*height: 1.5rem;*/
   padding: 0.5rem;
   margin-bottom: 1rem;
 }
 input:focus {
-  border: solid 1px #1696e6;
+  border: solid 1px #660708;
+  box-shadow: 0 0.5px 10px #e5383b;
 }
+
 ul {
   list-style: none;
 }
 li {
   padding: 0.5rem;
+  border-radius: 90px;
 }
 li:hover {
-  background-color: #1c2732;
+  box-shadow: 0 0.5px 10px #e5383b;
+  cursor: pointer;
 }
 </style>

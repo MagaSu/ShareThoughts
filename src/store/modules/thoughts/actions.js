@@ -1,14 +1,14 @@
 export default {
-  async addTweet(context, payload) {
+  async addThought(context, payload) {
     const userId = context.rootGetters.userId;
 
     const response = await fetch(
-      `https://twitter-clone-e8a3c-default-rtdb.firebaseio.com/tweets.json`,
+      `https://share-thoughts-10a74-default-rtdb.firebaseio.com/thoughts.json`,
       {
         method: "POST",
         body: JSON.stringify({
           id: userId,
-          tweet: payload.tweet,
+          thought: payload.thought,
           time: payload.time,
         }),
       }
@@ -21,16 +21,16 @@ export default {
       throw error;
     }
 
-    context.commit("addTweet", {
-      tweet: payload.tweet,
+    context.commit("addThought", {
+      thought: payload.thought,
       time: payload.time,
     });
   },
-  async fetchTweets(context) {
+  async fetchThoughts(context) {
     // const userId = context.rootGetters.userId;
 
     const response = await fetch(
-      `https://twitter-clone-e8a3c-default-rtdb.firebaseio.com/tweets.json`
+      `https://share-thoughts-10a74-default-rtdb.firebaseio.com/thoughts.json`
     );
 
     const responseData = await response.json();
@@ -40,16 +40,16 @@ export default {
       throw error;
     }
 
-    const tweets = [];
+    const thoughts = [];
 
     for (const key in responseData) {
-      const tweet = {
+      const thought = {
         id: responseData[key].id,
-        tweet: responseData[key].tweet,
+        thought: responseData[key].thought,
         time: responseData[key].time,
       };
-      tweets.push(tweet);
+      thoughts.push(thought);
     }
-    context.commit("loadTweets", tweets);
+    context.commit("loadThoughts", thoughts);
   },
 };

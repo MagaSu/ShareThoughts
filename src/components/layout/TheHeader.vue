@@ -1,9 +1,7 @@
 <template>
   <header>
     <nav>
-      <h1>
-        <router-link to="/user">Twitter Clone</router-link>
-      </h1>
+      <h1>Share thoughts</h1>
       <ul>
         <li v-if="userId">
           <router-link to="/user">Home</router-link>
@@ -58,7 +56,6 @@ header {
   height: 4rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #fff;
 }
 header a {
   text-decoration: none;
@@ -69,7 +66,7 @@ header a {
 }
 a:hover,
 a:active {
-  color: #1da1f2;
+  color: #a4161a;
 }
 header nav {
   width: 90%;
